@@ -1,15 +1,3 @@
-/// Copyright 2022 Orion Services @ https://github.com/orion-services
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-/// http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-///  limitations under the License.
 import 'package:dio/dio.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:users_client/client/user_ws.dart';
@@ -24,12 +12,8 @@ class UsersClient implements UserUCInterface {
 
   @override
   Future<Response> createUser(String name, String email, String password) {
-    if (name.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        !EmailValidator.validate(email)) {
-      throw Exception(
-          'The arguments must be not empty and the e-mail must be valid');
+    if (name.isEmpty || email.isEmpty || password.isEmpty || !EmailValidator.validate(email)) {
+      throw Exception('The arguments must be not empty and the e-mail must be valid');
     } else {
       if (password.length < 8) {
         throw Exception('The password must have at least eight characters');
@@ -42,22 +26,16 @@ class UsersClient implements UserUCInterface {
   @override
   Future<Response> authenticate(String email, String password) {
     if (email.isEmpty || password.isEmpty || !EmailValidator.validate(email)) {
-      throw Exception(
-          'The arguments must be not empty and the e-mail must be valid');
+      throw Exception('The arguments must be not empty and the e-mail must be valid');
     } else {
       return _service.authenticate(email, password);
     }
   }
 
   @override
-  Future<Response> createAuthenticate(
-      String name, String email, String password) {
-    if (name.isEmpty ||
-        email.isEmpty ||
-        password.isEmpty ||
-        !EmailValidator.validate(email)) {
-      throw Exception(
-          'The arguments must be not empty and the e-mail must be valid');
+  Future<Response> createAuthenticate(String name, String email, String password) {
+    if (name.isEmpty || email.isEmpty || password.isEmpty || !EmailValidator.validate(email)) {
+      throw Exception('The arguments must be not empty and the e-mail must be valid');
     } else {
       if (password.length < 8) {
         throw Exception('The password must have at least eight characters');
@@ -90,12 +68,8 @@ class UsersClient implements UserUCInterface {
   }
 
   @override
-  Future<Response> updatePassword(
-      String email, String password, String newPassword, String jwt) {
-    if (email.isEmpty ||
-        password.isEmpty ||
-        newPassword.isEmpty ||
-        jwt.isEmpty) {
+  Future<Response> updatePassword(String email, String password, String newPassword, String jwt) {
+    if (email.isEmpty || password.isEmpty || newPassword.isEmpty || jwt.isEmpty) {
       throw Exception('The arguments must be not empty');
     }
     if (!EmailValidator.validate(email)) {

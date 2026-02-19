@@ -30,9 +30,6 @@ class _FakeResponse_0 extends _i1.SmartFake implements dio.Response {
         );
 }
 
-/// A class which mocks [OrionUsers].
-///
-/// See the documentation for Mockito's code generation for more information.
 class MockOrionUsers extends _i1.Mock implements _i3.OrionUsers {
   MockOrionUsers() {
     _i1.throwOnMissingStub(this);
@@ -371,8 +368,7 @@ class MockOrionUsers extends _i1.Mock implements _i3.OrionUsers {
         )),
       ) as _i4.Future<dio.Response>);
   @override
-  _i4.Future<dio.Response> recoverPassword(String? email) =>
-      (super.noSuchMethod(
+  _i4.Future<dio.Response> recoverPassword(String? email) => (super.noSuchMethod(
         Invocation.method(
           #recoverPassword,
           [email],

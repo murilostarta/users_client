@@ -1,15 +1,3 @@
-/// Copyright 2022 Orion Services @ https://github.com/orion-services
-/// Licensed under the Apache License, Version 2.0 (the "License");
-/// you may not use this file except in compliance with the License.
-/// You may obtain a copy of the License at
-///
-/// http://www.apache.org/licenses/LICENSE-2.0
-///
-/// Unless required by applicable law or agreed to in writing, software
-/// distributed under the License is distributed on an "AS IS" BASIS,
-/// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-/// See the License for the specific language governing permissions and
-///  limitations under the License.
 import 'dart:async';
 
 import 'package:dio/dio.dart';
@@ -26,14 +14,12 @@ import 'orion_users_cli_test.mocks.dart';
 void main() {
   test('Create an user with small password', () {
     UserUCInterface uc = UsersClient();
-    expect(() => uc.createUser('Orion', 'orion@test.com', '1234567'),
-        throwsException);
+    expect(() => uc.createUser('Orion', 'orion@test.com', '1234567'), throwsException);
   });
 
   test('Create user with a blank name', () {
     UserUCInterface uc = UsersClient();
-    expect(
-        () => uc.createUser('', 'orion@test.com', '12345678'), throwsException);
+    expect(() => uc.createUser('', 'orion@test.com', '12345678'), throwsException);
   });
 
   test('Create user with a blank e-mail', () {
@@ -48,8 +34,7 @@ void main() {
 
   test('Create user with an e-mail invalid', () {
     UserUCInterface uc = UsersClient();
-    expect(() => uc.createUser('Orion', 'orion#test.com', '12345678'),
-        throwsException);
+    expect(() => uc.createUser('Orion', 'orion#test.com', '12345678'), throwsException);
   });
 
   test('Autenticantes a user with a blank e-mail', () {
@@ -69,8 +54,8 @@ void main() {
 
   test('Create and authenticates a user', () {
     var ws = MockOrionUsers();
-    when(ws.createUser('Orion', 'orion@test.com', '12345678'))
-        .thenAnswer((_) => Future<Response>.value(Response(requestOptions: RequestOptions(path: ''), data: '', headers: Headers(), statusCode: 200)));
+    when(ws.createUser('Orion', 'orion@test.com', '12345678')).thenAnswer((_) => Future<Response>.value(
+        Response(requestOptions: RequestOptions(path: ''), data: '', headers: Headers(), statusCode: 200)));
 
     UserUCInterface uc = UsersClient();
     var response = uc.createAuthenticate('Orion', 'orion@test.com', '12345678');
