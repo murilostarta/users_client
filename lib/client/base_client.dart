@@ -2,6 +2,7 @@ import 'dart:developer' as developer;
 import 'package:users_client/client/adapter/dio_adapter.dart';
 
 class BaseClient {
+  static String Function()? routeNameProvider;
   late bool https;
 
   late String host;
@@ -28,6 +29,7 @@ class BaseClient {
   }
 
   void changeServiceConnection(bool https, String host, String port) {
+    this.https = https;
     this.host = host;
     this.port = port;
     _handleHTTP(https);
@@ -43,7 +45,10 @@ class BaseClient {
   }
 
   void _createURL() {
-    var urlBase = host + ':' + port;
+    var urlBase = host;
+    if (!(https && port == '443') && !(!https && port == '80') && port.isNotEmpty) {
+      urlBase = host + ':' + port;
+    }
     wsURL = wsURL + urlBase + '/' + api + '/' + wsEndpoint + '/';
   }
 
@@ -51,6 +56,8 @@ class BaseClient {
     String path, {
     Map<String, Object?>? headers,
   }) {
+    final route = routeNameProvider?.call() ?? 'unknown';
+    developer.log('GET $path route=$route', name: 'api');
     return dio.get(path,
         options: Options(
           headers: headers,
@@ -59,6 +66,8 @@ class BaseClient {
   }
 
   Future<Response> put(String path, {Map<String, Object?>? headers, Object? body}) {
+    final route = routeNameProvider?.call() ?? 'unknown';
+    developer.log('PUT $path route=$route', name: 'api');
     return dio.put(path,
         data: body,
         options: Options(
@@ -69,6 +78,8 @@ class BaseClient {
   }
 
   Future<Response> post(String path, {Map<String, Object?>? headers, Object? body}) {
+    final route = routeNameProvider?.call() ?? 'unknown';
+    developer.log('POST $path route=$route', name: 'api');
     return dio.post(path,
         data: body,
         options: Options(
@@ -79,6 +90,8 @@ class BaseClient {
   }
 
   Future<Response> delete(String path, {Map<String, Object?>? headers, Object? body}) {
+    final route = routeNameProvider?.call() ?? 'unknown';
+    developer.log('DELETE $path route=$route', name: 'api');
     return dio.delete(path,
         data: body,
         options: Options(
