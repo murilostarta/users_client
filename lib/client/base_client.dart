@@ -26,6 +26,17 @@ class BaseClient {
       connectTimeout: Duration(seconds: 5),
       sendTimeout: Duration(seconds: 5),
     ));
+    dio.interceptors.add(InterceptorsWrapper(
+      onError: (e, handler) {
+        developer.log(
+          'Dio error: ${e.message}',
+          name: 'dio',
+          error: e,
+          stackTrace: e.stackTrace,
+        );
+        handler.next(e);
+      },
+    ));
   }
 
   void changeServiceConnection(bool https, String host, String port) {
