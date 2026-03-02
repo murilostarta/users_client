@@ -27,6 +27,20 @@ class BaseClient {
       sendTimeout: Duration(seconds: 5),
     ));
     dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        developer.log(
+          'REQ ${options.method} ${options.uri}',
+          name: 'api',
+        );
+        handler.next(options);
+      },
+      onResponse: (response, handler) {
+        developer.log(
+          'RES ${response.statusCode} ${response.requestOptions.uri}',
+          name: 'api',
+        );
+        handler.next(response);
+      },
       onError: (e, handler) {
         developer.log(
           'Dio error: ${e.message}',
